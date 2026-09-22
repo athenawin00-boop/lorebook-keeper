@@ -1,0 +1,62 @@
+<div class="jev-lorebook-panel">
+    <div class="jev-panel-header">
+        <h3 id="jev_panel_heading"></h3>
+        <div id="jev_panel_refresh" class="menu_button menu_button_icon" title="패널을 새로고침해요">
+            <i class="fa-solid fa-rotate"></i>
+            <span>새로고침</span>
+        </div>
+        <div id="jev_panel_open_convert" class="menu_button menu_button_icon" title="챗 → 로어북 변환에 쓰는 모델·분량·문체를 여기서 조정해요">
+            <i class="fa-solid fa-gears"></i>
+            <span>로어북 만들기 설정</span>
+        </div>
+    </div>
+
+    <div class="jev-panel-section">
+        <div class="jev-panel-title">상태</div>
+        <div id="jev_panel_summary"></div>
+        <div class="jev-keep-row">
+            <label for="jev_panel_keep_recent">남겨둘 최근 챗 수</label>
+            <input id="jev_panel_keep_recent" class="text_pole" type="number" min="0" step="1" />
+        </div>
+    </div>
+
+    <div class="jev-panel-section">
+        <div class="jev-panel-title">챗 → 로어북 변환</div>
+        <div id="jev_panel_convert_help" class="jev-panel-muted"></div>
+        <div id="jev_panel_convert_profile" class="jev-profile-badge"></div>
+        <div class="flex-container">
+            <div id="jev_panel_convert" class="menu_button menu_button_icon" title="새 메시지를 요약해 로어북 항목으로 변환하고 자동으로 색인해요">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>챗 → 로어북 변환</span>
+            </div>
+            <div id="jev_panel_undo" class="menu_button menu_button_icon" title="직전 변환을 통짜로 되돌려요 — 추가된 항목 삭제, 코어 복원, 변환 지점·작중 앵커 되돌림, 숨긴 메시지 복구" style="display: none;">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>직전 변환 되돌리기</span>
+            </div>
+            <div id="jev_panel_split" class="menu_button menu_button_icon" title="통짜 항목을 날짜별 덩어리로 나눠 드려요 (실행 전에 자동 백업해요)">
+                <i class="fa-solid fa-scissors"></i>
+                <span>기존 항목 스플릿</span>
+            </div>
+            <div id="jev_panel_open_editor" class="menu_button menu_button_icon" title="대상 로어북을 에디터에서 바로 열어 드려요 — 백업본·비슷한 이름과 헷갈리지 않게요">
+                <i class="fa-solid fa-book-open"></i>
+                <span>이 로어북을 에디터에서 열기</span>
+            </div>
+        </div>
+        <small id="jev_panel_convert_status" class="jev-lorebook-status"></small>
+    </div>
+
+    <div id="jev_panel_warnings" class="jev-panel-section jev-panel-warnbox" style="display: none;">
+        <div class="jev-panel-title">⚠ 직전 변환 경고</div>
+        <div id="jev_panel_warnings_list"></div>
+    </div>
+
+    <div class="jev-panel-section">
+        <div id="jev_panel_injected_title" class="jev-panel-title">직전 턴 — 프롬프트에 들어간 것</div>
+        <div id="jev_panel_injected"></div>
+    </div>
+
+    <div class="jev-panel-section">
+        <div id="jev_panel_chunks_title" class="jev-panel-title"></div>
+        <div id="jev_panel_chunks"></div>
+    </div>
+</div>

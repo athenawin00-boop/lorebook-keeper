@@ -1,0 +1,714 @@
+/* ⚠ 레이아웃(flex·gap)은 ST가 표시/숨김을 제어하는 서랍 컨테이너가 아니라
+   안쪽 래퍼(.jev-set-body)에 건다 (v0.15.0).
+   그 컨테이너에 display를 걸면 ST 기본값(public/style.css:5535 의 display:none)을
+   클래스 2개짜리 specificity로 이겨서 서랍이 처음부터 펼쳐진 채 뜬다.
+   여닫기는 jQuery slideToggle이 인라인 display를 박아 멀쩡해 보이므로 클릭 테스트로는 안 잡힌다. */
+.jev-lorebook-settings .jev-set-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.jev-lorebook-settings label {
+    margin-top: 4px;
+}
+
+.jev-lorebook-status {
+    opacity: 0.7;
+    min-height: 1em;
+}
+
+/* ── 설정탭 그룹 (v0.6.4) ─────────────────────────── */
+/* 평면 나열을 기능별로 묶는다. 접지 않는다 — 첫 5분에 숨기면 설치가 어려워진다. */
+
+.jev-lorebook-settings .jev-set-group {
+    font-weight: bold;
+    opacity: 0.9;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+}
+
+.jev-lorebook-settings .jev-set-group:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.jev-lorebook-settings .jev-set-help {
+    opacity: 0.65;
+    font-size: 0.9em;
+    margin-top: -2px;
+}
+
+/* ── 세부 패널 (요술봉) ─────────────────────────────────────────────── */
+
+.jev-lorebook-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.jev-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.jev-panel-header h3 {
+    margin: 0;
+}
+
+.jev-panel-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+    padding-top: 8px;
+}
+
+.jev-panel-title {
+    font-weight: bold;
+}
+
+.jev-panel-row {
+    display: flex;
+    gap: 8px;
+}
+
+.jev-panel-label {
+    opacity: 0.7;
+    min-width: 7em;
+}
+
+.jev-panel-muted {
+    opacity: 0.7;
+    font-size: 0.9em;
+}
+
+.jev-panel-error {
+    color: var(--warning, #e5a50a);
+    font-size: 0.9em;
+}
+
+.jev-panel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+}
+
+.jev-panel-table th,
+.jev-panel-table td {
+    border: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+    padding: 2px 6px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.jev-panel-table td.jev-cell-title {
+    white-space: normal;
+    word-break: break-all;
+}
+
+.jev-panel-table tr.jev-adopted {
+    background-color: rgba(80, 160, 80, 0.18);
+    font-weight: bold;
+}
+
+.jev-panel-table tr.jev-missing {
+    opacity: 0.6;
+}
+
+.jev-panel-world {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.jev-panel-world-title {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.jev-panel-core {
+    border: 1px solid rgba(230, 180, 60, 0.5);
+    border-radius: 4px;
+    padding: 4px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background-color: rgba(230, 180, 60, 0.08);
+}
+
+.jev-panel-core-title {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* ── 스플릿 선택 다이얼로그 ─────────────────────────────────── */
+
+.jev-split-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.jev-split-dialog h3 {
+    margin: 0 0 4px 0;
+}
+
+.jev-split-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 0;
+}
+
+.jev-split-row .jev-cell-title {
+    flex: 1;
+}
+
+.jev-reindex-warning {
+    color: var(--warning, #e5a50a);
+    font-size: 0.9em;
+}
+
+.jev-key-missing {
+    color: var(--warning, #e5a50a);
+}
+
+/* 키 미등록일 때만 뜨는 등록 경로 안내 (v0.7.0).
+   확장이 임베딩 키를 직접 안 받는다는 사실이 UI에 전혀 안 드러나서 최초 설치자가 막혔다. */
+.jev-key-help {
+    margin: 4px 0 2px;
+    padding: 8px 10px;
+    border-left: 3px solid var(--warning, #e5a50a);
+    background-color: var(--black30a, rgba(0, 0, 0, 0.15));
+    border-radius: 4px;
+    font-size: 0.9em;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+.jev-key-help > div + div {
+    margin-top: 4px;
+}
+
+.jev-key-help-punch {
+    font-weight: 600;
+}
+
+/* 안내 안의 [API 연결 열기] — 블록 폭을 다 먹지 않게 자기 너비만 쓴다 */
+.jev-key-help #jev_lorebook_open_api {
+    display: inline-flex;
+    margin-top: 8px;
+}
+
+.jev-profile-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* ── 변환 프로필 배지 (v0.6.4) ─────────────────────── */
+/* "메인 API를 사용해요" 고정문구 자리. 버튼 누르기 직전에 어떤 모델로 요약하는지 보여준다. */
+
+.jev-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 3px 9px;
+    border-radius: 11px;
+    font-size: 0.88em;
+    background-color: rgba(128, 128, 128, 0.14);
+    border: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+}
+
+.jev-profile-badge i {
+    opacity: 0.75;
+}
+
+.jev-profile-badge.jev-badge-warn {
+    color: var(--warning, #e5a50a);
+    border-color: var(--warning, #e5a50a);
+    background-color: rgba(229, 165, 10, 0.12);
+}
+
+.jev-profile-badge.jev-badge-warn i {
+    opacity: 1;
+}
+
+/* ── 항목 전문 펼치기 (v0.6.4) ────────────────────── */
+/* PC·폰 동일하게 클릭 하나. hover는 폰에 없어서 안 쓴다. */
+
+.jev-panel-table td.jev-cell-toggle {
+    text-align: center;
+    padding: 2px 4px;
+}
+
+.jev-detail-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 2px 7px;
+    border-radius: 9px;
+    white-space: nowrap;
+    opacity: 0.75;
+    border: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+}
+
+.jev-detail-toggle:hover,
+.jev-detail-toggle:focus-visible,
+.jev-detail-toggle.jev-open {
+    opacity: 1;
+    background-color: rgba(128, 128, 128, 0.16);
+}
+
+.jev-detail-toggle i {
+    font-size: 0.85em;
+}
+
+.jev-panel-table tr.jev-detail-row > td {
+    white-space: normal;
+    background-color: rgba(128, 128, 128, 0.07);
+}
+
+/* 높이 제한 없음 — 항목이 청크로 쪼져 있어서 길어야 얼마 안 된다(현이 결정). */
+.jev-detail-body {
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.5;
+    padding: 6px 4px;
+}
+
+/* ── 코어 ↔ 검색층 전환 (v0.6.4) ──────────────────── */
+/* 파란 원 = 상시(코어, 매 턴 고정주입) / 초록 원 = 검색층(선별 주입 대상) */
+
+.jev-panel-table td.jev-cell-core {
+    text-align: center;
+    padding: 2px 4px;
+    width: 1%;
+}
+
+.jev-core-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 3px 5px;
+    border-radius: 50%;
+    line-height: 1;
+    transition: transform 0.12s ease, background-color 0.12s ease;
+}
+
+.jev-core-toggle:hover,
+.jev-core-toggle:focus-visible {
+    background-color: rgba(128, 128, 128, 0.2);
+    transform: scale(1.15);
+}
+
+.jev-core-toggle.disabled {
+    opacity: 0.4;
+    cursor: default;
+    transform: none;
+}
+
+.jev-core-toggle.jev-is-core i {
+    color: #4a90d9;
+}
+
+.jev-core-toggle.jev-is-search i {
+    color: #5fa570;
+}
+
+/* ── 챗 적치 현황 막대 (v0.6.3) ───────────────────────────────── */
+.jev-stack-box {
+    margin: 6px 0 2px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: rgba(128, 128, 128, 0.08);
+}
+
+.jev-stack-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+}
+
+.jev-stack-bar {
+    display: flex;
+    height: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+    background-color: rgba(128, 128, 128, 0.15);
+}
+
+.jev-stack-seg {
+    height: 100%;
+    transition: width 0.25s ease;
+}
+
+.jev-seg-done    { background-color: rgba(128, 128, 128, 0.45); }
+.jev-seg-pending { background-color: rgba(230, 170, 60, 0.85); }
+.jev-seg-buffer  { background-color: rgba(90, 160, 110, 0.75); }
+
+.jev-stack-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    margin-top: 6px;
+    font-size: 0.88em;
+}
+
+.jev-leg {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.jev-leg b { font-weight: 600; }
+.jev-leg > span { opacity: 0.85; }
+
+.jev-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.jev-stack-verdict {
+    margin-top: 7px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    font-size: 0.9em;
+    line-height: 1.45;
+    opacity: 0.9;
+}
+
+.jev-verdict-warm { color: var(--warning, #e5a50a); opacity: 1; }
+.jev-verdict-hot  { color: var(--warning, #e5a50a); opacity: 1; font-weight: 600; }
+
+/* ── v0.7.0 추가 ─────────────────────────────────── */
+
+/* topK 슬라이더 — 숫자와 '전체 N개'를 한 줄에 붙여야 "30이 많은 건가"가 읽힌다 */
+.jev-lorebook-settings .jev-range-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.jev-lorebook-settings .jev-range-row input[type="range"] {
+    flex: 1;
+    min-width: 0;
+}
+
+.jev-lorebook-settings .jev-range-value {
+    white-space: nowrap;
+    font-size: 0.92em;
+}
+
+.jev-lorebook-settings .jev-range-total {
+    opacity: 0.65;
+}
+
+.jev-lorebook-settings textarea#jev_lorebook_convert_style {
+    width: 100%;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* 변환 경고 박스 — 토스트는 몇 초 뒤 사라지지만 잘린 요약은 로어북에 남는다 */
+.jev-panel-warnbox {
+    border: 1px solid var(--warning, #e5a50a);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background-color: rgba(229, 165, 10, 0.08);
+}
+
+.jev-warn-line {
+    color: var(--warning, #e5a50a);
+    font-size: 0.9em;
+    margin-top: 2px;
+}
+
+/* 배지 옆 경고 문구 — 배지 자체는 주의 스타일(jev-badge-warn)을 그대로 쓴다 */
+.jev-profile-badge .jev-badge-note {
+    opacity: 0.85;
+    font-size: 0.92em;
+}
+
+/* ── 로어 4계층 (v0.8.0) ───────────────────────────────────────────────
+   ST 본체와 같은 4층(채팅/캐릭터/전역/페르소나)을 감지하므로 북이 여러 개 섞인다.
+   어느 북의 어느 층인지가 한눈에 안 보이면 표가 통째로 읽히지 않는다. */
+
+.jev-layer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.jev-layer-summary {
+    font-size: 0.9em;
+    opacity: 0.75;
+}
+
+.jev-layer-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.9em;
+}
+
+.jev-layer-name {
+    word-break: break-all;
+}
+
+.jev-layer-meta {
+    opacity: 0.65;
+}
+
+.jev-layer-badge {
+    display: inline-block;
+    border: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.4));
+    border-radius: 4px;
+    padding: 0 5px;
+    margin-right: 6px;
+    font-size: 0.85em;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+/* 판정 표 북별 그룹 헤더 — '월드' 칸을 없앤 자리를 대신한다 */
+.jev-panel-table tr.jev-panel-group-row > td {
+    background-color: rgba(128, 128, 128, 0.14);
+    font-weight: bold;
+    white-space: normal;
+}
+
+.jev-group-name {
+    word-break: break-all;
+}
+
+.jev-group-meta {
+    margin-left: 8px;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+/* 이번 턴 실제 주입 — 분류 배지 (v0.9.0). jev-layer-badge와 같은 시각 언어. */
+.jev-kind-badge {
+    display: inline-block;
+    border: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.4));
+    border-radius: 4px;
+    padding: 0 5px;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.jev-kind-badge.jev-kind-jev {
+    border-color: var(--SmartThemeQuoteColor, rgba(120, 180, 120, 0.8));
+}
+
+.jev-kind-badge.jev-kind-keyword {
+    opacity: 0.8;
+}
+
+/* 🎲 랜덤 주입 (v0.15.0) — 판정을 안 거친 항목이라 🧠와 다른 색을 준다 */
+.jev-kind-badge.jev-kind-random {
+    border-color: var(--warning, rgba(230, 170, 60, 0.8));
+}
+
+/* 남겨둘 최근 챗 수 — 챗 적치 막대 바로 아래 미리보기 입력 (v0.15.0) */
+.jev-keep-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0 2px;
+}
+
+.jev-keep-row label {
+    white-space: nowrap;
+    font-size: 0.9em;
+    opacity: 0.85;
+}
+
+.jev-keep-row input[type="number"] {
+    width: 7em;
+    flex: 0 0 auto;
+}
+
+/* ── 판정 탈락 후보 접힘 블록 (v0.9.1) ──────────────────
+   두 표를 하나로 합치면서, 채택되지 못한 판정 후보는 여기로 내렸다.
+   토글 자체는 전문 펼침(.jev-detail-toggle)과 같은 시각 언어를 쓴다. */
+.jev-reject-block {
+    margin-top: 10px;
+}
+
+.jev-reject-toggle {
+    opacity: 0.7;
+}
+
+.jev-reject-body {
+    padding-left: 6px;
+    border-left: 2px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+    margin-top: 6px;
+}
+
+/* ── 로어북 매니저 번역본 (v0.16.0) ──────────────────────
+   타 확장(simple-lorebook)이 저장해 둔 번역을 전문 펼침 안에서 읽기 전용으로 보여준다.
+   원문과 번역 사이는 선 하나로만 가른다 — 버튼도 배지도 두지 않는다(현이 결정). */
+.jev-detail-translation {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.3));
+}
+
+.jev-detail-translation-caption {
+    font-size: 0.82em;
+    opacity: 0.55;
+    margin-bottom: 4px;
+}
+
+.jev-detail-translation-body {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ── 항목 3상태 (v0.17.0) ─────────────────────────────────────────────
+   🔵 상시(코어) / 🟢 검색층 / ⚫ 꺼짐. disable과 constant는 독립 필드라
+   끌 때 constant를 보존하면 '원래 색'이 항목 안에 남는다 → 복귀에 별도 저장소가 필요 없다. */
+.jev-core-toggle.jev-is-off i {
+    color: #8a8a8a;
+}
+
+/* 꺼진 항목은 두 표에서 사라지지 않고 회색 행으로 남는다 —
+   그 행의 동그라미가 확장 안에서 되살릴 수 있는 유일한 경로다. */
+.jev-panel-table tr.jev-row-off {
+    opacity: 0.45;
+    font-style: italic;
+}
+
+.jev-panel-table tr.jev-row-off:hover {
+    opacity: 0.75;
+}
+
+/* ── 확장 탭 감지 요약 한 줄 (v0.17.0) ───────────────────────────── */
+.jev-detect-summary {
+    opacity: 0.8;
+    font-size: 0.95em;
+}
+
+/* 세부 설정 팝업 버튼 2개 — 좁은 화면에서는 줄바꿈으로 흘린다 */
+.jev-lorebook-settings .jev-set-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* ── 주입 예산 합계 한 줄 (v0.17.0, 팝업 A) ──────────────────────
+   숫자 세 통(코어·검색·랜덤)이 매 턴 얼마가 되는지를 한 줄로 못박는다. */
+.jev-budget-total {
+    margin-top: 4px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background-color: rgba(128, 128, 128, 0.12);
+    font-size: 0.92em;
+}
+
+/* ── 로어북별 설정 (v0.17.0, 요구 H) ─────────────────────────────── */
+.jev-override-badge {
+    border-color: rgba(230, 180, 60, 0.7);
+    opacity: 1;
+}
+
+.jev-layer-gear {
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 0 4px;
+}
+
+.jev-layer-gear:hover,
+.jev-layer-gear:focus-visible {
+    opacity: 1;
+}
+
+/* 팝업 본문 — 설정탭과 같은 세로 스택을 쓰되 좌측 정렬은 팝업 옵션(leftAlign)이 맡는다 */
+.jev-popup-body {
+    text-align: left;
+}
+
+.jev-popup-body h3 {
+    margin: 0 0 6px;
+}
+
+/* ── 계층별 설정 4행 (v0.18.0) ──────────────────────────────────────
+   행 골격은 감지 목록(.jev-layer-row)을 그대로 쓴다 — 같은 시각 언어여야 우선순위가 읽힌다.
+   유효값 줄만 따로: 이름 칸이 아니라 '지금 적용되는 값' 요약이라 톱니 앞에서 늘어나야 한다. */
+.jev-layer-effective {
+    flex: 1 1 auto;
+    opacity: 0.75;
+    word-break: keep-all;
+}
+
+/* ── 전문 펼침의 발동 배지 + 키 칩 (v0.19.0, 양쪽 공용) ──────────────────
+   색은 ST 테마 변수 기반 — 확장이 자기 팔레트를 들고 오면 테마를 바꾼 사용자 화면에서 튄다. */
+.jev-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.jev-fire-badge {
+    font-size: 0.8em;
+    padding: 1px 7px;
+    border-radius: 9px;
+    background-color: var(--SmartThemeQuoteColor);
+    color: var(--SmartThemeBlurTintColor);
+    white-space: nowrap;
+}
+
+.jev-key-chip {
+    font-size: 0.8em;
+    padding: 1px 7px;
+    border-radius: 9px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    opacity: 0.85;
+    white-space: nowrap;
+    font-family: monospace;
+}
+
+/* ── 변환 시작 팝업 3옵션 (v0.19.0, 논제브 전용 화면이지만 CSS는 공용 파일에 둔다) ──── */
+.jev-convert-opt {
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.jev-convert-help {
+    margin: 2px 0 0 22px;
+    display: block;
+    opacity: 0.8;
+}
+
+.jev-convert-cost {
+    color: var(--SmartThemeQuoteColor);
+    font-weight: bold;
+}
+
+.jev-convert-cost-note {
+    margin-top: 12px;
+    display: block;
+    opacity: 0.7;
+}
